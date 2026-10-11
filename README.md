@@ -1,6 +1,3 @@
-```markdown
-<div align="center">
-
 # Automated Surface Crack Detection System
 ### High-Precision Industrial Computer Vision Pipeline using Deep CNNs
 
@@ -10,11 +7,7 @@
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Metrics-yellow?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-<p align="center">
-  <b>Automating concrete and masonry inspection to identify micro-fractures and eliminate human error.</b>
-</p>
-
-</div>
+Automating concrete and masonry inspection to identify micro-fractures and eliminate human error.
 
 ---
 
@@ -25,11 +18,11 @@ Manual structural inspection of bridges, roads, tunnels, and concrete slabs is i
 This repository implements an end-to-end Deep Learning pipeline centered on a custom **4-Stage Convolutional Neural Network (CNN)**[cite: 1]. The architecture extracts hierarchical spatial features from surface imagery to perform binary classification (Defect vs. Non-Defect), with training calibrated specifically to reduce safety-critical False Negatives[cite: 1].
 
 
-```
+
 
 Raw Images ──► Stratified Split ──► Augmentation Generator ──► 4-Block CNN ──► Early Stopping & Checkpoint ──► Single Inference Engine
 
-```
+
 
 ---
 
@@ -37,7 +30,7 @@ Raw Images ──► Stratified Split ──► Augmentation Generator ──►
 
 * **Automated Data Partitioning**: Programmatically builds a clean 70% Train, 15% Validation, and 15% Test split with isolated directories to eliminate data leakage[cite: 1].
 * **Online Data Augmentation**: Introduces real-time spatial transformations (rotation, shear, translation, zooming, and horizontal flips) to ensure invariance across real factory lighting and camera orientations[cite: 1].
-* **Deep 4-Block Convolutional Backbone**: Progressively extracts low-level edge anomalies to high-level crack trajectories using 32 $\rightarrow$ 64 $\rightarrow$ 128 $\rightarrow$ 256 filter hierarchies[cite: 1].
+* **Deep 4-Block Convolutional Backbone**: Progressively extracts low-level edge anomalies to high-level crack trajectories using 32 ➔ 64 ➔ 128 ➔ 256 filter hierarchies[cite: 1].
 * **Production Training Guards**: Integrates dynamic callbacks (`EarlyStopping` with optimal weight rollback, `ReduceLROnPlateau` for loss fine-tuning, and `ModelCheckpoint` for saving the top validation epoch)[cite: 1].
 * **Industrial Decision Thresholding**: Features full confusion matrix and classification report evaluations designed to catch defects rather than rely solely on naive accuracy[cite: 1].
 
@@ -48,7 +41,7 @@ Raw Images ──► Stratified Split ──► Augmentation Generator ──►
 The neural network consumes 3-channel RGB imagery scaled down to $128 \times 128 \times 3$ and propagates it through 4 convolutional feature extractors followed by a regularized classification head[cite: 1]:
 
 
-```
+
 
 Input (128x128x3)
 │
@@ -68,25 +61,25 @@ Input (128x128x3)
 │
 └──► [Dense (1) + Sigmoid] ──► Defect Probability (0.0 to 1.0)
 
-```
+
 
 | Layer Stage | Filters / Units | Activation | Parameter Function |
 | :--- | :---: | :---: | :--- |
-| **Input Layer** | — | — | Standardizes pixel values from $[0, 255]$ to $[0.0, 1.0]$[cite: 1] |
-| **Conv Block 1** | $32 \times (3 \times 3)$ | ReLU | Captures local surface transitions, contrast gradients, and thin lines[cite: 1] |
-| **Conv Block 2** | $64 \times (3 \times 3)$ | ReLU | Detects structural contours, localized curves, and concrete textures[cite: 1] |
-| **Conv Block 3** | $128 \times (3 \times 3)$ | ReLU | Isolates branching fissure structures and multi-angle crack runs[cite: 1] |
-| **Conv Block 4** | $256 \times (3 \times 3)$ | ReLU | Encodes high-level structural anomalies and surface discontinuities[cite: 1] |
+| **Input Layer** | — | — | Standardizes pixel values from [0, 255] to [0.0, 1.0][cite: 1] |
+| **Conv Block 1** | 32 × (3 × 3) | ReLU | Captures local surface transitions, contrast gradients, and thin lines[cite: 1] |
+| **Conv Block 2** | 64 × (3 × 3) | ReLU | Detects structural contours, localized curves, and concrete textures[cite: 1] |
+| **Conv Block 3** | 128 × (3 × 3) | ReLU | Isolates branching fissure structures and multi-angle crack runs[cite: 1] |
+| **Conv Block 4** | 256 × (3 × 3) | ReLU | Encodes high-level structural anomalies and surface discontinuities[cite: 1] |
 | **Flatten** | 9,216 | — | Serializes spatial feature maps into a 1D tensor[cite: 1] |
 | **Dense Head 1** | 256 | ReLU | High-capacity classification reasoning with 50% neuron dropout[cite: 1] |
 | **Dense Head 2** | 128 | ReLU | Intermediate feature compression with 30% neuron dropout[cite: 1] |
-| **Output Head** | 1 | Sigmoid | Computes Bernoulli class probability $\hat{y} \in [0, 1]$[cite: 1] |
+| **Output Head** | 1 | Sigmoid | Computes Bernoulli class probability between 0 and 1[cite: 1] |
 
 ---
 
 ## 📂 Repository Structure
 
-```text
+text
 ├── CrackDataset/                              # Raw input dataset
 │   ├── Positive/                              # Surfaces containing cracks
 │   └── Negative/                              # Defect-free surfaces
@@ -98,11 +91,11 @@ Input (128x128x3)
 │
 ├── Best_Crack_Detection_Model.keras           # Optimal checkpoint (highest val_accuracy)
 ├── Final_Marvellous_Crack_Detection_Model.keras # Exported post-training model
-├── Marvellous_CNN_Surface_Crack_Detection.py    # Complete training & inference pipeline
-├── requirements.txt                           # Frozen project dependencies
+├── CNN_Surface_Crack_Detection.py             # Complete training & inference pipeline
+├── requirement.txt                            # Project dependencies
 └── README.md                                  # Documentation
 
-```
+
 
 ---
 
@@ -110,10 +103,10 @@ Input (128x128x3)
 
 ### 1. Clone & Set Up Environment
 
-```bash
+bash
 # Clone the repository
-git clone [https://github.com/](https://github.com/)<your-username>/surface-crack-detection-cnn.git
-cd surface-crack-detection-cnn
+git clone https://github.com/Shreyash-p/Surface-Crack-Detection-CNN.git
+cd Surface-Crack-Detection-CNN
 
 # Initialize Python virtual environment
 python -m venv venv
@@ -125,33 +118,31 @@ source venv/bin/activate
 venv\Scripts\activate
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -r requirement.txt
 
-```
+
 
 ### 2. Dataset Preparation
 
 Place your raw image data in the `CrackDataset` folder following this structure:
 
-```text
+text
 CrackDataset/
 ├── Positive/   <-- Place your images with cracks here
 └── Negative/   <-- Place your clean surface images here
 
-```
 
-> Supported image formats: `.jpg`, `.jpeg`, `.png`, `.bmp`, `.webp`.
-> 
-> 
+
+Supported image formats: `.jpg`, `.jpeg`, `.png`, `.bmp`, `.webp`.
 
 ### 3. Run Pipeline
 
-Launch the end-to-end execution script:
+Launch the training and inference pipeline:
 
-```bash
-python Marvellous_CNN_Surface_Crack_Detection.py
+bash
+python CNN_Surface_Crack_Detection.py
 
-```
+
 
 The script will automatically:
 
@@ -194,11 +185,14 @@ The script will automatically:
 * **Loss Function**: `Binary Cross-Entropy`
 
 * **Augmentation Profile**:
-* Rotation Range: $\pm 15^\circ$
+* Rotation Range: ±15°
 
-* Zoom Range: $20\%$
 
-* Width & Height Shift: $10\%$
+* Zoom Range: 20%
+
+
+* Width & Height Shift: 10%
+
 
 * Horizontal Flip: Active
 
@@ -212,13 +206,13 @@ The script will automatically:
 
 Rather than optimizing solely for general accuracy, the model is evaluated on unseen test data using diagnostic metrics that emphasize safety:
 
-```
+
                     PREDICTED CLASS
                  No Crack       Crack
  ACTUAL   No Crack   [ TN ]        [ FP ]
   CLASS      Crack   [ FN ]        [ TP ]   <-- FN minimized to prevent safety risks
 
-```
+
 
 * **Precision**: Measures how often a flagged crack is an actual structural defect.
 
@@ -236,13 +230,13 @@ Rather than optimizing solely for general accuracy, the model is evaluated on un
 
 You can run predictions on arbitrary surface images using the included inference function:
 
-```python
-from Marvellous_CNN_Surface_Crack_Detection import predict_single_image
+python
+from CNN_Surface_Crack_Detection import predict_single_image
 
 # Run inference on any image path
 predict_single_image("path/to/surface_image.jpg")
 
-```
+
 
 The function handles normalization, dimensions reshaping, dynamic class-index mapping, and displays the image alongside its prediction probability.
 
@@ -266,6 +260,7 @@ The function handles normalization, dimensions reshaping, dynamic class-index ma
 
 
 
-```
 
-```
+
+4. Click **Commit changes...** at the top right of the editor. GitHub will render it as formatted HTML instead of a code box.
+
