@@ -1,7 +1,3 @@
-The text you pasted contains invisible citation tags (e.g. `[cite: 1]`) and invisible non-breaking space characters that make it look messy on GitHub.
-
-Here is the clean, production-ready `README.md` file without any citation markers or broken spaces. Copy and paste the entire block below directly into your repository:
-
 ```markdown
 # Industrial Surface Crack Detection using Deep CNN
 
