@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-An end-to-end Deep Learning pipeline designed for automated structural defect inspection on concrete and industrial surfaces. The system processes raw surface imagery, handles dataset restructuring and augmentation, trains a custom 4-block Convolutional Neural Network (CNN) with adaptive callbacks, and exports a production-ready model with single-image inference capabilities.
+An end-to-end Deep Learning pipeline designed for automated structural defect inspection on concrete and industrial surfaces[cite: 1]. The system processes raw surface imagery, handles dataset restructuring and augmentation, trains a custom 4-block Convolutional Neural Network (CNN) with adaptive callbacks, and exports a production-ready model with single-image inference capabilities[cite: 1].
 
 ---
 
@@ -24,64 +24,64 @@ An end-to-end Deep Learning pipeline designed for automated structural defect in
 
 ## Project Overview
 
-Manual visual inspection of structural surfaces (bridges, road pavements, concrete slabs, and building walls) is slow, resource-heavy, and prone to human inspection fatigue. This project delivers an automated visual defect classifier capable of distinguishing between cracked and non-cracked surfaces.
+Manual visual inspection of structural surfaces (bridges, road pavements, concrete slabs, and building walls) is slow, resource-heavy, and prone to human inspection fatigue. This project delivers an automated visual defect classifier capable of distinguishing between cracked and non-cracked surfaces[cite: 1].
 
 ### Key Highlights
-- **Automated Data Preparation**: Programmatically partitions source images into a strictly isolated 70% Train, 15% Validation, and 15% Test split to prevent data leakage.
-- **Real-Time Data Augmentation**: Synthetically expands feature diversity with random rotations, shifts, flips, and zoom variations using `ImageDataGenerator`.
-- **4-Stage Feature Extraction**: Progressively extracts low-level edges up to complex fracture geometries via 3x3 convolutional filters combined with Batch Normalization and MaxPooling.
-- **Overfitting Guards**: Utilizes multi-tier Dropout (0.5 and 0.3), early stopping with automatic weight restoration, and plateau-driven learning rate reduction.
-- **Defect-Centric Diagnostics**: Assesses performance using Precision, Recall, F1-score, and Confusion Matrices to verify minimization of False Negatives.
+- **Automated Data Preparation**: Programmatically partitions source images into a strictly isolated 70% Train, 15% Validation, and 15% Test split to prevent data leakage[cite: 1].
+- **Real-Time Data Augmentation**: Synthetically expands feature diversity with random rotations, shifts, flips, and zoom variations using `ImageDataGenerator`[cite: 1].
+- **4-Stage Feature Extraction**: Progressively extracts low-level edges up to complex fracture geometries via 3x3 convolutional filters combined with Batch Normalization and MaxPooling[cite: 1].
+- **Overfitting Guards**: Utilizes multi-tier Dropout (0.5 and 0.3)[cite: 1], early stopping with automatic weight restoration[cite: 1], and plateau-driven learning rate reduction[cite: 1].
+- **Defect-Centric Diagnostics**: Assesses performance using Precision, Recall, F1-score, and Confusion Matrices to verify minimization of False Negatives[cite: 1].
 
 ---
 
 ## System Architecture
 
-The network processes RGB images scaled to 128x128x3 through 4 convolutional stages before feeding flattened representations into a dense classification head:
+The network processes RGB images scaled to 128x128x3 through 4 convolutional stages before feeding flattened representations into a dense classification head[cite: 1]:
 
 | Layer | Kernel / Units | Activation | Output Shape | Primary Function |
 | :--- | :---: | :---: | :---: | :--- |
-| **Input** | — | — | `(None, 128, 128, 3)` | Normalized RGB pixels [0, 1] |
-| **Conv2D Block 1** | 32 x (3 x 3) | ReLU | `(None, 126, 126, 32)` | Low-level edge and line detection |
-| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 63, 63, 32)` | Normalization and spatial downsampling |
-| **Conv2D Block 2** | 64 x (3 x 3) | ReLU | `(None, 61, 61, 64)` | Mid-level texture & curve detection |
-| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 30, 30, 64)` | Normalization and spatial downsampling |
-| **Conv2D Block 3** | 128 x (3 x 3) | ReLU | `(None, 28, 28, 128)` | Complex pattern assembly |
-| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 14, 14, 128)` | Normalization and spatial downsampling |
-| **Conv2D Block 4** | 256 x (3 x 3) | ReLU | `(None, 12, 12, 256)` | High-level crack fracture representations |
-| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 6, 6, 256)` | Normalization and spatial downsampling |
-| **Flatten** | — | — | `(None, 9216)` | Vectorizes multidimensional feature maps |
-| **Dense + Dropout** | 256 | ReLU | `(None, 256)` | High-capacity reasoning with 50% Dropout |
-| **Dense + Dropout** | 128 | ReLU | `(None, 128)` | Feature compression with 30% Dropout |
-| **Output (Dense)** | 1 | Sigmoid | `(None, 1)` | Probability output in [0, 1] |
+| **Input** | — | — | `(None, 128, 128, 3)` | Normalized RGB pixels [0, 1][cite: 1] |
+| **Conv2D Block 1** | 32 x (3 x 3) | ReLU | `(None, 126, 126, 32)` | Low-level edge and line detection[cite: 1] |
+| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 63, 63, 32)` | Normalization and spatial downsampling[cite: 1] |
+| **Conv2D Block 2** | 64 x (3 x 3) | ReLU | `(None, 61, 61, 64)` | Mid-level texture & curve detection[cite: 1] |
+| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 30, 30, 64)` | Normalization and spatial downsampling[cite: 1] |
+| **Conv2D Block 3** | 128 x (3 x 3) | ReLU | `(None, 28, 28, 128)` | Complex pattern assembly[cite: 1] |
+| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 14, 14, 128)` | Normalization and spatial downsampling[cite: 1] |
+| **Conv2D Block 4** | 256 x (3 x 3) | ReLU | `(None, 12, 12, 256)` | High-level crack fracture representations[cite: 1] |
+| **BatchNorm + MaxPool** | (2 x 2) | — | `(None, 6, 6, 256)` | Normalization and spatial downsampling[cite: 1] |
+| **Flatten** | — | — | `(None, 9216)` | Vectorizes multidimensional feature maps[cite: 1] |
+| **Dense + Dropout** | 256 | ReLU | `(None, 256)` | High-capacity reasoning with 50% Dropout[cite: 1] |
+| **Dense + Dropout** | 128 | ReLU | `(None, 128)` | Feature compression with 30% Dropout[cite: 1] |
+| **Output (Dense)** | 1 | Sigmoid | `(None, 1)` | Probability output in [0, 1][cite: 1] |
 
 ---
 
 ## Directory Layout
 
-Place your raw dataset inside `CrackDataset/`:
+Place your raw dataset inside `CrackDataset/`[cite: 1]:
 
 ```text
 surface-crack-detection-cnn/
 │
-├── CrackDataset/                      # Source raw dataset
-│   ├── Positive/                      # Surface images with cracks
-│   └── Negative/                      # Clean surface images
+├── CrackDataset/                      # Source raw dataset[cite: 1]
+│   ├── Positive/                      # Surface images with cracks[cite: 1]
+│   └── Negative/                      # Clean surface images[cite: 1]
 │
-├── Processed_CrackDataset/            # Auto-generated by script
-│   ├── train/                         # 70% of total data
-│   │   ├── Crack/
-│   │   └── NoCrack/
-│   ├── validation/                    # 15% of total data
-│   │   ├── Crack/
-│   │   └── NoCrack/
-│   └── test/                          # 15% of total data
-│       ├── Crack/
-│       └── NoCrack/
+├── Processed_CrackDataset/            # Auto-generated by script[cite: 1]
+│   ├── train/                         # 70% of total data[cite: 1]
+│   │   ├── Crack/[cite: 1]
+│   │   └── NoCrack/[cite: 1]
+│   ├── validation/                    # 15% of total data[cite: 1]
+│   │   ├── Crack/[cite: 1]
+│   │   └── NoCrack/[cite: 1]
+│   └── test/                          # 15% of total data[cite: 1]
+│       ├── Crack/[cite: 1]
+│       └── NoCrack/[cite: 1]
 │
-├── Best_Crack_Detection_Model.keras   # Saved model with best val_accuracy
-├── Final_Marvellous_Crack_Detection_Model.keras # Exported final model
-├── Marvellous_CNN_Surface_Crack_Detection.py    # Main pipeline script
+├── Best_Crack_Detection_Model.keras   # Saved model with best val_accuracy[cite: 1]
+├── Final_Marvellous_Crack_Detection_Model.keras # Exported final model[cite: 1]
+├── Marvellous_CNN_Surface_Crack_Detection.py    # Main pipeline script[cite: 1]
 ├── requirements.txt                   # Project dependencies
 └── README.md                          # Project documentation
 
@@ -119,6 +119,8 @@ pip install -r requirements.txt
 
 4. **Prepare the dataset**:
 Place your images in `CrackDataset/Positive/` and `CrackDataset/Negative/`. The script automatically filters valid file extensions (`.jpg`, `.jpeg`, `.png`, `.bmp`, `.webp`).
+
+
 5. **Run the pipeline**:
 ```bash
 python Marvellous_CNN_Surface_Crack_Detection.py
@@ -132,20 +134,34 @@ python Marvellous_CNN_Surface_Crack_Detection.py
 ## Pipeline Workflow
 
 1. **Integrity Check**: Verifies folder paths and asserts that non-empty image pools exist in source folders.
+
+
 2. **Data Partitioning**: Shuffles files using seed `42` and separates them into `train` (70%), `validation` (15%), and `test` (15%). Any stale processed directories are completely wiped before rebuilding.
+
+
 3. **Data Preprocessing & Augmentation**:
 * Training generator applies:
 * `rescale = 1.0 / 255`
+
 * `rotation_range = 15` degrees
+
+
 * `zoom_range = 0.2`
+
 * `width_shift_range = 0.1` and `height_shift_range = 0.1`
+
 * `horizontal_flip = True`
+
 
 
 * Validation & Test generators apply strictly `rescale = 1.0 / 255` to prevent data leakage or synthetic evaluation distortion.
 
 
+
+
 4. **Mini-Batch Streaming**: `flow_from_directory` loads images in batches of 32 at (128x128) dimensions lazily from disk.
+
+
 
 ---
 
@@ -156,8 +172,14 @@ The model is compiled with the **Adam** optimizer and **Binary Cross-Entropy** l
 Training incorporates three automated monitoring callbacks:
 
 * **`EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)`**: Stops training when validation loss stalls for 4 consecutive epochs, rewinding model weights to their optimal state.
+
+
 * **`ModelCheckpoint('Best_Crack_Detection_Model.keras', monitor='val_accuracy', save_best_only=True)`**: Persists the highest-performing checkpoint on disk based on validation accuracy.
+
+
 * **`ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, min_lr=1e-5)`**: Dynamically drops the learning rate by 80% when loss plateaus, allowing the optimizer to settle into narrow local minima.
+
+
 
 ---
 
@@ -174,9 +196,17 @@ predicted_classes = (predictions > 0.5).astype(int).reshape(-1)
 Evaluation output includes:
 
 * **Test Accuracy and Loss**: Computed on completely unseen holdout samples.
+
+
 * **Confusion Matrix**: Maps True Positives, False Positives, True Negatives, and False Negatives to evaluate inspection safety.
+
+
 * **Classification Report**: Full per-class breakdown of Precision, Recall, and F1-score.
+
+
 * **Learning Curves**: Automated plots depicting `Training vs. Validation Accuracy` and `Training vs. Validation Loss` across all epochs.
+
+
 
 ---
 
@@ -195,20 +225,40 @@ predict_single_image("Processed_CrackDataset/test/Crack/sample_crack.jpg")
 The function handles:
 
 1. Resizing the image to 128x128 pixels.
+
+
 2. Converting the PIL image into a NumPy array and scaling pixels by 1/255.0.
+
+
 3. Expanding tensor dimensions to create a batch format: `(1, 128, 128, 3)`.
+
+
 4. Resolving dynamic class mappings against `train_data.class_indices` to output a binary decision with the raw sigmoid confidence score.
+
+
 5. Displaying the analyzed image with the classification label formatted on top.
+
+
 
 ---
 
 ## Tech Stack
 
 * **Deep Learning**: TensorFlow 2.x, Keras
+
+
 * **Scientific Computing**: NumPy
+
+
 * **Image Processing**: Pillow, Keras Preprocessing (`ImageDataGenerator`)
+
+
 * **Evaluation & Diagnostics**: Scikit-Learn
+
+
 * **Visualization**: Matplotlib
+
+
 
 ```
 
